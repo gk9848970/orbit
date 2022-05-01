@@ -1,0 +1,178 @@
+@use 'sass:math';
+
+body {
+    font-family: system-ui;
+    display: grid;
+    min-height: 100vh;
+    place-content: center;
+    overflow: hidden;
+}
+
+.orbit {
+    --size: 12rem;
+    --roation-speed: 90s;
+    --rotation-play-state: running;
+
+    width: var(--size);
+    aspect-ratio: 1 / 1;
+    
+    display: grid;
+    place-items: center;
+
+    .center-image {
+        width: var(--size);
+        aspect-ratio: 1 / 1;
+        position: absolute;
+        z-index: 10;
+
+        img {
+            position: absolute;
+            transition: opacity 500ms;
+
+            // Man Image is second child so not first child
+            &:not(:first-child):hover {
+                opacity: 0;
+            }
+        }
+    }
+
+    ul {
+        --throb-speed: 2.5s;
+        --throb-play-state: running;
+
+        width: var(--size);
+        aspect-ratio: 1 / 1;
+
+        display: grid;
+        place-items: center;
+
+        position: absolute;
+
+        animation: rotation var(--roation-speed) linear infinite;
+        animation-play-state: var(--rotation-play-state);
+
+        list-style: none;
+        // distance for li from centre
+        --d-straight: 14rem;
+        --d-diagonal: calc(var(--d-straight) * #{math.cos(45deg)});
+
+        &:hover {
+            --rotation-play-state: paused;
+        }
+    }
+
+    li {
+        // transparent has no meaning just initial value.
+        --icon-bg: transparent;
+        --text-bg: transparent;
+
+        display: grid;
+        place-items: center;
+
+        position: absolute;
+
+        width: 8rem;
+        aspect-ratio: 1 / 1;
+        border-radius: 50%;
+
+        text-align: center;
+        line-height: 1;
+        font-weight: 500;
+        color: var(--white-light);
+
+        &:hover {
+            --throb-play-state: paused;
+        }
+
+        & > * {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+
+            display: grid;
+            place-items: center;
+
+            border-radius: inherit;
+
+            // Double animations
+            animation: rotation var(--roation-speed) linear infinite reverse,
+            throb var(--throb-speed) linear infinite alternate;
+            animation-play-state: var(--rotation-play-state), var(--throb-play-state);
+        }
+
+        div {
+            background: var(--icon-bg);
+        }
+
+        p {
+            background: var(--text-bg);
+            opacity: 0;
+            transition: opacity 500ms;
+        }
+
+        &:hover > p {
+            opacity: 1;
+        }
+    }
+
+    li:nth-child(1) {
+        --icon-bg: var(--blue-light);
+        --text-bg: var(--blue-dark);
+        transform: translate(var(--d-straight), 0);
+    }
+
+    li:nth-child(2) {
+        --icon-bg: var(--green-light);
+        --text-bg: var(--green-dark);
+        transform: translate(var(--d-diagonal), var(--d-diagonal));
+    }
+
+    li:nth-child(3) {
+        --icon-bg: var(--pink-light);
+        --text-bg: var(--pink-dark);
+        transform: translate(0, var(--d-straight));
+    }
+
+    li:nth-child(4) {
+        --icon-bg: var(--red-light);
+        --text-bg: var(--red-dark);
+        transform: translate(calc(-1*var(--d-diagonal)), var(--d-diagonal));
+    }
+
+    li:nth-child(5) {
+        --icon-bg: var(--brown-light);
+        --text-bg: var(--brown-dark);
+        transform: translate(calc(-1*var(--d-straight)), 0);
+    }
+
+    li:nth-child(6) {
+        --icon-bg: var(--yellow-light);
+        --text-bg: var(--yellow-dark);
+        transform: translate(calc(-1*var(--d-diagonal)), calc(-1*var(--d-diagonal)));
+    }
+
+    li:nth-child(7) {
+        --icon-bg: var(--purple-light);
+        --text-bg: var(--purple-dark);
+        transform: translate(0, calc(-1*var(--d-straight)));
+    }
+
+    li:nth-child(8) {
+        --icon-bg: var(--orange-light);
+        --text-bg: var(--orange-dark);
+        transform: translate(var(--d-diagonal), calc(-1*var(--d-diagonal)));
+    }
+}
+
+@keyframes rotation {
+    100% {
+        rotate: 1turn;
+    }
+}
+
+@keyframes throb {
+    100% {
+        scale: 1.11;
+    }
+}
+
