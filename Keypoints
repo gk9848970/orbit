@@ -1,0 +1,52 @@
+Saas
+
+1.Maps Colors generating custom properties for US
+Colors as custom properties even in Saas.
+
+2. Looping in scss
+
+@use 'sass:color';
+@use "../abstracts/" as *;
+
+:root {
+  @each $name, $value in $colors {
+    --#{$name}--light: #{$value};
+    --#{$name}--dark: #{color.adjust($value, $lightness: -40%)};
+  }
+}
+
+sass:color a sass built in color libary for color.adjust function
+abstracts contain a $colors map, to which we loop
+
+So basically we are creating custom properties in root faster and also different shade of same color
+
+3. Selectors explained website
+
+4. Position absolute, First parent with position other than static
+
+5. Grid and Position absolute
+
+6. Suppose you translate a square as 100px in x and 100px in y.
+Now also the transform origin will be with respect to where originally the box was.
+
+7. After one turn, The rotation becomes 0deg itself, 0 -> 180 -> 360 == 0
+
+8. The animation paused state property.
+
+9. The infinite alternative on animation, For example if done normally animation of
+100% {100px in x-direction} infinitely, 
+The element will go 100px in x direction, Then abruptly it will come at 0px at end of animation and repeat.
+
+If done with animation as alternate, The element will got to 100px in x-direction.
+Then come to 0 kind of like reverse animation and then again repeat.
+
+10. Double animation on elements
+
+11. Scale also having issues due to transform origin and thing being already translated
+
+12. Suppose you have a structure like ul>li>div and you have many li's
+ul has a custom property which div uses,
+
+Initially all divs using same custom property getting it from ul
+
+You can make li:hover { --custom: xyz }, Now the li which is hovered will have the property changed, and the div inside the hover li will use the new changed value which it gets from li
